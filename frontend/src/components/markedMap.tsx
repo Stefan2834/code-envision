@@ -36,7 +36,7 @@ const GoogleMapWithMarkers = ({ boards }: { boards: any }) => {
     }, [boards]);
 
     return (
-        <div className="bg-red-400">
+        <div className="flex items-center justify-center">
             <div ref={mapContainerRef} style={{ width: '1500px', height: '700px' }}></div>
         </div>
     );

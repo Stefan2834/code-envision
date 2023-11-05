@@ -1,15 +1,32 @@
 import GoogleMapWithMarkers from '@/components/markedMap'
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import axios from 'axios'
 
-export default function marker() {
-    const [marker, setMarker] = useState([])
-    useEffect(() => {
-        axios.get('http://localhost:9000/users/get-boards').then(data => { setMarker(data.data.boards); console.log(data.data.boards) })
-    }, [])
+export default function marker({ markers }: { markers: any }) {
     return (
         <div>
-            <GoogleMapWithMarkers boards={marker} />
+            <GoogleMapWithMarkers boards={markers} />
         </div>
     )
+}
+
+
+export async function getServerSideProps() {
+    try {
+        const response = await axios.get('http://localhost:9000/users/get-boards')
+
+        return {
+            props: {
+                markers: response.data.boards || { location: [] },
+            },
+        };
+    } catch (error) {
+        console.error('Error fetching temperature data:', error);
+
+        return {
+            props: {
+                markers: { location: [] },
+            },
+        };
+    }
 }

@@ -27,11 +27,12 @@ const boardsSchema = new mongoose.Schema({
 
 const Temp = mongoose.model('data', temperatureSchema);
 const Particle = mongoose.model('particle', particleSchema);
-
+const Humidity = mongoose.model('humidity', humiditySchema);
 const Boards = mongoose.model("board", boardsSchema)
 
 module.exports = {
     Temp,
     Particle,
-    Boards
+    Boards,
+    Humidity
 }

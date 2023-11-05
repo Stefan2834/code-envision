@@ -41,7 +41,7 @@ void loop() {
 
   if (!isnan(temperature) || !isnan(sensorValue) || !isnan(humidity)) {
     HTTPClient http;
-    String url = String(apiEndpoint) + "/update-temperature";
+    String url = String(apiEndpoint) + "/users/update-temperature";
     http.begin(url);
     http.addHeader("Content-Type", "application/json");
 

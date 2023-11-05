@@ -73,3 +73,34 @@ function onListening() {
   debug('Listening on ' + bind);
 }
 
+const cron = require('node-cron');
+const { Humidity } = require('../routes/schema');
+
+const task = cron.schedule('0 0 * * *', async () => {
+  try {
+    const humidity = await Humidity.findOne({})
+    const updatedHum = await Humidity.findOneAndUpdate(
+      {},
+      {
+        current: humidity.current,
+        last24Sum: humidity.current,
+        last24Total: 1,
+      },
+      { new: false }
+    );
+    const temperature = await Temperature.findOne({})
+    const updatedTemp = await Temperature.findOneAndUpdate(
+      {},
+      {
+        current: temperature.current,
+        last24Sum: temperature.current,
+        last24Total: 1,
+      },
+      { new: false }
+    );
+  } catch (err) {
+    console.log(err)
+  }
+});
+
+task.start();
